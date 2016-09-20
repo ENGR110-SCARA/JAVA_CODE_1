@@ -11,8 +11,7 @@ import ecs100.UI;
 import java.awt.Color;
 import java.util.*;
 
-public class Arm
-{
+public class Arm{
 
     // fixed arm parameters
     private int xm1;  // coordinates of the motor(measured in pixels of the picture)
@@ -52,8 +51,7 @@ public class Arm
     /**
      * Constructor for objects of class Arm
      */
-    public Arm()
-    {
+    public Arm(){
         xm1 = 290; // set motor coordinates
         ym1 = 372;
         xm2 = 379;
@@ -65,8 +63,7 @@ public class Arm
     }
 
     // draws arm on the canvas
-    public void draw()
-    {
+    public void draw(){
         // draw arm
         int height = UI.getCanvasHeight();
         int width = UI.getCanvasWidth();
@@ -125,7 +122,7 @@ public class Arm
         double  Ax = ((xj1+xj2)/2);
         double  Ay = ((yj1+yj2)/2);
         // distance between joints
-        double d = Math.sqrt((Math.pow(xj2-xj1, 2))-(Math.pow(yj2-yj1, 2)));
+        double d = Math.sqrt((Math.pow(xj2-xj1, 2))+(Math.pow(yj2-yj1, 2)));
         if (d<2*r){
             valid_state = true;
             // half distance between tool positions
@@ -153,7 +150,7 @@ public class Arm
         double dx1 = xt - xm1; 
         double dy1 = yt - ym1;
         // distance between pem and motor
-        double d1 = ...;
+        double d1 = Math.sqrt((Math.pow((xt-xm1), 2))+(Math.pow((yt-ym1), 2)));
         if (d1>2*r){
             //UI.println("Arm 1 - can not reach");
             valid_state = false;
