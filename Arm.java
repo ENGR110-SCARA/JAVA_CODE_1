@@ -1,5 +1,3 @@
-
-
 /**
  * Class represents SCARA robotic arm.
  * 
@@ -22,23 +20,12 @@ public class Arm{
     // parameters of servo motors - linear function pwm(angle)
     // each of two motors has unique function which should be measured
     // linear function cam be described by two points
-    // motor 1, point1 
-    private double pwm1_val_1; 
-    private double theta1_val_1;
-    // motor 1, point 2
-    private double pwm1_val_2; 
-    private double theta1_val_2;
-
-    // motor 2, point 1
-    private double pwm2_val_1; 
-    private double theta2_val_1;
-    // motor 2, point 2
-    private double pwm2_val_2; 
-    private double theta2_val_2;
 
     // current state of the arm
     private double theta1; // angle of the upper arm
     private double theta2;
+    private int pwm1;
+    private int pwm2;
 
     private double xj1;     // positions of the joints
     private double yj1; 
@@ -221,19 +208,21 @@ public class Arm{
         theta1 = t1;
         theta2 = t2;
     }
+    
+    public void set_pwms(){ 
+        int pwm1 = (int)(-10.537*theta1 + 563.709);
+        int pwm2 =(int)(-10.616*theta2 + 704.607);
+    }
 
     // returns motor control signal
     // for motor to be in position(angle) theta1
     // linear intepolation
     public int get_pwm1(){
-        int pwm = 0;
-        return pwm;
+        return pwm1;
     }
     // ditto for motor 2
-    public int get_pwm2(){
-        int pwm =0;
-        //pwm = (int)(pwm2_90 + (theta2 - 90)*pwm2_slope);
-        return pwm;
+    public int get_pwm2(){]
+        return pwm2;
     }
 
 }
