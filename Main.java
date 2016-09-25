@@ -35,6 +35,10 @@ public class Main{
         UI.addButton("Load path XY", this::load_xy);
         UI.addButton("Save path Ang", this::save_ang);
         UI.addButton("Load path Ang:Play", this::load_ang);
+        UI.addButton("Draw Line (CORE)", this::drawLine);
+        UI.addButton("Draw rectangle (CORE)", this::drawRect);
+        UI.addButton("Draw oval (CORE)", this::drawOval);
+        UI.addButton("File transfer to pi (COMPLETION)", this::transferFile);
                 
        // UI.addButton("Quit", UI::quit);
         UI.setMouseMotionListener(this::doMouse);
@@ -120,6 +124,12 @@ public class Main{
         
         
     }
+    
+    public void drawLine(){}
+    public void drawRect(){}
+    public void drawOval(){}
+    
+    public void transferFile(){}
    
     
     public void save_xy(){
