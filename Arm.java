@@ -34,6 +34,8 @@ public class Arm{
     private double xt;     // position of the tool
     private double yt;
     private boolean valid_state; // is state of the arm physically possible?
+    
+    private int validLeft, validTop, validBoxWd, validBoxHt;
 
     /**
      * Constructor for objects of class Arm
@@ -47,6 +49,27 @@ public class Arm{
         theta1 = -90.0*Math.PI/180.0; // initial angles of the upper arms
         theta2 = -90.0*Math.PI/180.0;
         valid_state = false;
+        //ESTIMATE TOOL REGION
+        int tempX = (xm1+xm2)/2;
+        int tempY = (ym1+ym2)/2;
+        int halfWidth = 0, height = 0;
+        while(!testToolRange(tempX, tempY)){
+            tempY--;
+        }
+        while(testToolRange(tempX, tempY)){
+            tempX--;
+            halfWidth++;
+        }
+        validBoxWd = 2*halfWidth;
+        tempX++;
+        while(testToolRange(tempX, tempY)){
+            tempY--;
+            height++;
+        }
+        validBoxHt = height;
+        validTop = tempY;
+        validLeft = tempX; 
+        //UI.println(validLeft+" "+ validTop+" "+  validBoxWd+" "+  validBoxHt);
     }
 
     // draws arm on the canvas
@@ -101,6 +124,9 @@ public class Arm{
             // draw tool
             double rt = 20;
             UI.drawOval(xt-rt/2,yt-rt/2,rt,rt);
+            
+            UI.setColor(Color.yellow); UI.drawRect(validLeft, validTop, validBoxWd, validBoxHt);
+            UI.setColor(Color.blue);
         }
 
     }
@@ -195,7 +221,69 @@ public class Arm{
         }
         //UI.printf("xt:%3.1f, yt:%3.1f\n",xt,yt);
         //UI.printf("theta1:%3.1f, theta2:%3.1f\n",theta1*180/Math.PI,theta2*180/Math.PI);
+        set_pwms();
         return;
+    }
+    
+    public boolean testToolRange(double xt_new,double yt_new){
+
+        valid_state = true;
+        xt = xt_new;
+        yt = yt_new;
+        valid_state = true;
+        double dx1 = xm1 - xt; 
+        double dy1 = ym1 - yt;
+        // distance between pen and motor
+        double d1 = Math.sqrt((Math.pow(dx1, 2))+(Math.pow(dy1, 2)));
+        if (d1>2*r){
+            //UI.println("Arm 1 - can not reach");
+            return false;
+        }
+
+        double l1 = d1/2;
+        double h1 = Math.sqrt(r*r - d1*d1/4);
+        // elbows positions
+        double beta1 = Math.atan2((yt-ym1), (xt-xm1));
+        double alpha1 = (((Math.PI)/2.0)-((Math.PI) -beta1));
+        xj1 = (xm1+((xt-xm1)/2.0))+(h1*Math.cos(alpha1));
+        yj1 = (ym1+((yt-ym1)/2.0))+(h1*Math.sin(alpha1));
+
+        theta1 = Math.atan2((yj1-ym1), (xj1-xm1));
+        if ((theta1>0)||(theta1<-Math.PI)){
+            //UI.println("Ange 1 -invalid");
+            return false;
+        }
+
+        //double theta12 = atan2(yj12 - ym1,xj12-xm1);
+        double dx2 = xm2 - xt; 
+        double dy2 = ym2 - yt;
+        double d2 = Math.sqrt((Math.pow(dx2, 2))+(Math.pow(dy2, 2)));;
+        if (d2>2*r){
+            // UI.println("Arm 2 - can not reach");
+            return false;
+        }
+
+        double l2 = d2/2;
+
+        double h2 = Math.sqrt(r*r - d2*d2/4);
+        // elbows positions
+        double beta2 = Math.atan2((yt-ym2), (xt-xm2));
+        double alpha2 = (((Math.PI)/2.0)-((Math.PI)-beta2));
+        xj2 = (xm2+((xt-xm2)/2.0))-(h2*Math.cos(alpha2));
+        yj2 = (ym2+((yt-ym2)/2.0))-(h2*Math.sin(alpha2));
+        // motor angles for both 1st elbow positions
+        theta2 = Math.atan2((yj2-ym2), (xj2-xm2));
+        
+        if ((theta2>0)||(theta2<-Math.PI)){
+            //UI.println("Angle 2 -invalid");
+            return false;
+        }
+        if(yt>=(yj2+((yj1-yj2)/2.0)-5)){
+            return false;
+        }
+        //UI.printf("xt:%3.1f, yt:%3.1f\n",xt,yt);
+        //UI.printf("theta1:%3.1f, theta2:%3.1f\n",theta1*180/Math.PI,theta2*180/Math.PI);
+        return true;
     }
     
 
@@ -214,8 +302,8 @@ public class Arm{
     }
     
     public void set_pwms(){ 
-        int pwm1 = (int)(-10.537*theta1 + 563.709);
-        int pwm2 =(int)(-10.616*theta2 + 704.607);
+        pwm1 = (int)(-10.537*theta1 + 563.709);
+        pwm2 =(int)(-10.616*theta2 + 704.607);
     }
 
     // returns motor control signal
