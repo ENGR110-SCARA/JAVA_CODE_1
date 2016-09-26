@@ -125,9 +125,37 @@ public class Main{
         
     }
     
-    public void drawLine(){}
-    public void drawRect(){}
-    public void drawOval(){}
+    public void drawLine(){
+
+        int Xstart = 200;
+        int Xfinish = 400;
+        int Y = 200;
+        double x;
+        //plot line adding points to list
+        for(int i = Xstart; i<Xfinish; i+=10){
+            drawing.add_point_to_path(i, Y, true);
+        }
+    }
+
+    public void drawRect(){
+
+    }
+
+    public void drawOval(){
+        int radius = 50;    //half diameter
+        double centreX = 338;
+        double centreY = 210;
+
+        double X;
+        double Y;
+        
+        //plot line adding points to list
+        for(int i = 0; i<=372; i+=12){
+            X = centreX + radius*Math.cos((((double)i/180)*Math.PI));
+            Y = centreY + radius*Math.sin((((double)i/180)*Math.PI));
+            drawing.add_point_to_path(X, Y, true);
+        }
+    }
     
     public void transferFile(){}
    
