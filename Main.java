@@ -130,7 +130,27 @@ public class Main{
     }
 
     public void drawRect(){
-
+        int Xleft = 200;
+        int Xright = 400;
+        int Ytop = 150;
+        int Ybottom = 300;
+        
+        //top line
+        for(int i = Xleft; i<=Xright; i+=5){
+            drawing.add_point_to_path(i, Ytop, true);
+        }
+        //right line
+        for(int i = Ytop; i<=Ybottom; i+=5){
+            drawing.add_point_to_path(Xright, i, true);
+        }
+        //bottom line
+        for(int i = Xright; i>=Xleft; i-=5){
+            drawing.add_point_to_path(i, Ybottom, true);
+        }
+        //left line
+        for(int i = Ybottom; i>=Ytop; i-=5){
+            drawing.add_point_to_path(Xleft, i, true);
+        }
     }
 
     public void drawOval(){
