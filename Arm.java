@@ -221,7 +221,7 @@ public class Arm{
         }
         //UI.printf("xt:%3.1f, yt:%3.1f\n",xt,yt);
         //UI.printf("theta1:%3.1f, theta2:%3.1f\n",theta1*180/Math.PI,theta2*180/Math.PI);
-        set_pwms();
+        //set_pwms();
         return;
     }
     
