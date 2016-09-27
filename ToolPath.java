@@ -1,6 +1,7 @@
  
 
 
+
 /**
  * ToolPath stores motor contol signals (pwm)
  * and motor angles
@@ -77,6 +78,8 @@ public class ToolPath
                 }
             }
         }
+        convert_angles_to_pwm(arm);
+        save_pwm_file(fname);
     }
     
     public void save_angles(String fname){
@@ -111,13 +114,35 @@ public class ToolPath
         for (int i=0 ; i < theta1_vector.size();i++){
             arm.set_angles(theta1_vector.get(i),theta2_vector.get(i));
             pwm1_vector.add(arm.get_pwm1());
+            UI.println("theta "+theta1_vector.get(i)+ " pwm " + pwm1_vector.get(i));
             pwm2_vector.add(arm.get_pwm2());
         }
     }
     
     // save file with motor control values
-    public void save_pwm_file(){
-        //...
+    public void save_pwm_file(String fname){
+        for ( int i = 0 ; i < theta1_vector.size(); i++){
+         UI.printf(" t1=%d t2=%d pen=%d\n",
+            pwm1_vector.get(i),pwm2_vector.get(i),pen_vector.get(i));
+        }
+        
+         try {
+            //Whatever the file path is.
+            File statText = new File(fname);
+            FileOutputStream is = new FileOutputStream(statText);
+            OutputStreamWriter osw = new OutputStreamWriter(is);    
+            Writer w = new BufferedWriter(osw);
+            String str_out;
+            for (int i = 1; i < theta1_vector.size() ; i++){
+                str_out = String.format("%d,%d,%d\n",
+                  pwm1_vector.get(i),pwm2_vector.get(i),pen_vector.get(i));
+                w.write(str_out);
+            }
+            w.close();
+        } catch (IOException e) {
+            UI.println("Problem writing to the file statsTest.txt");
+        }
+        
     }
-
+    
 }
