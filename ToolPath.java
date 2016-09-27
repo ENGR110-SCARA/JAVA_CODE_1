@@ -47,6 +47,8 @@ public class ToolPath
     {
         // initialise instance variables
       n_steps = 50;
+      //use 1 step for circle
+      //n_steps = 1;
       theta1_vector = new ArrayList<Double>();
       theta2_vector = new ArrayList<Double>();
       pen_vector = new ArrayList<Integer>();
@@ -70,16 +72,18 @@ public class ToolPath
                 double y = p0.get_y() + j*(p1.get_y()-p0.get_y())/n_steps;
                 arm.inverseKinematic(x, y);
                 theta1_vector.add(arm.get_theta1()*180/Math.PI);
+                pwm1_vector.add(arm.get_pwm1());
                 theta2_vector.add(arm.get_theta2()*180/Math.PI);
+                pwm2_vector.add(arm.get_pwm2());
                 if (p0.get_pen()){ 
-                  pen_vector.add(1);
+                  pen_vector.add(2000);
                 } else {
-                  pen_vector.add(0);
+                  pen_vector.add(1000);
                 }
             }
         }
-        convert_angles_to_pwm(arm);
         save_pwm_file(fname);
+        //save_angles(fname);
     }
     
     public void save_angles(String fname){
@@ -122,7 +126,7 @@ public class ToolPath
     // save file with motor control values
     public void save_pwm_file(String fname){
         for ( int i = 0 ; i < theta1_vector.size(); i++){
-         UI.printf(" t1=%d t2=%d pen=%d\n",
+         UI.printf(" pwm1=%d pwm2=%d pen=%d\n",
             pwm1_vector.get(i),pwm2_vector.get(i),pen_vector.get(i));
         }
         
@@ -134,7 +138,7 @@ public class ToolPath
             Writer w = new BufferedWriter(osw);
             String str_out;
             for (int i = 1; i < theta1_vector.size() ; i++){
-                str_out = String.format("%d,%d,%d\n",
+                str_out = String.format("%d,%d,%d%n",
                   pwm1_vector.get(i),pwm2_vector.get(i),pen_vector.get(i));
                 w.write(str_out);
             }
