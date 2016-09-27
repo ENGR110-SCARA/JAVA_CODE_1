@@ -119,50 +119,38 @@ public class Main{
     }
     
     public void drawLine(){
-        int Xstart = 200;
+        int Xstart = 270;
         int Xfinish = 400;
-        int Y = 200;
-        double x;
+        int Y = 150;
+
         //plot line adding points to list
-        for(int i = Xstart; i<Xfinish; i+=10){
-            drawing.add_point_to_path(i, Y, true);
-        }
+        drawing.add_point_to_path(Xstart, Y, true);
+        drawing.add_point_to_path(Xfinish, Y, false);
     }
 
     public void drawRect(){ //We will need to scale these to ensure that the sides are exactly 40mm
-        int Xleft = 275;
-        int Xright = 400;
+        int Xleft = 275 + 50;
+        int Xright = 350+ 50;
         int Ytop = 110;
-        int Ybottom = 235;
+        int Ybottom = 185;
         
-        //top line
-        for(int i = Xleft; i<=Xright; i+=5){
-            drawing.add_point_to_path(i, Ytop, true);
-        }
-        //right line
-        for(int i = Ytop; i<=Ybottom; i+=5){
-            drawing.add_point_to_path(Xright, i, true);
-        }
-        //bottom line
-        for(int i = Xright; i>=Xleft; i-=5){
-            drawing.add_point_to_path(i, Ybottom, true);
-        }
-        //left line
-        for(int i = Ybottom; i>=Ytop; i-=5){
-            drawing.add_point_to_path(Xleft, i, true);
-        }
+        drawing.add_point_to_path(Xleft, Ytop, true);
+        drawing.add_point_to_path(Xright, Ytop, true);
+        drawing.add_point_to_path(Xright, Ybottom, true);
+        drawing.add_point_to_path(Xleft, Ybottom, true);
+        drawing.add_point_to_path(Xleft, Ytop, true);
     }
 
     public void drawOval(){
-        int radius = 50;    //half diameter
-        double centreX = 338;
-        double centreY = 210;
+        int radius = 37;    //half diameter
+        double centreX = 380;
+        double centreY = 140;
 
         double X;
         double Y;
-        
+
         //plot line adding points to list
-        for(int i = 0; i<=372; i+=12){
+        for(int i = 0; i<=366; i++){
             X = centreX + radius*Math.cos((((double)i/180)*Math.PI));
             Y = centreY + radius*Math.sin((((double)i/180)*Math.PI));
             drawing.add_point_to_path(X, Y, true);
