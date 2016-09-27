@@ -300,20 +300,17 @@ public class Arm{
         theta1 = t1;
         theta2 = t2;
     }
-    
-    public void set_pwms(){ 
-        pwm1 = (int)(-10.537*theta1 + 563.709);
-        pwm2 =(int)(-10.616*theta2 + 704.607);
-    }
 
     // returns motor control signal
     // for motor to be in position(angle) theta1
     // linear intepolation
     public int get_pwm1(){
+        pwm1 = (int)(-10.537*(theta1*180/Math.PI) + 563.709);
         return pwm1;
     }
     // ditto for motor 2
     public int get_pwm2(){
+        pwm2 =(int)(-10.616*(theta2*180/Math.PI) + 704.607);
         return pwm2;
     }
 
