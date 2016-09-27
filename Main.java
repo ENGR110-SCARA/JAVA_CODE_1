@@ -129,11 +129,11 @@ public class Main{
         }
     }
 
-    public void drawRect(){
-        int Xleft = 200;
+    public void drawRect(){ //We will need to scale these to ensure that the sides are exactly 40mm
+        int Xleft = 275;
         int Xright = 400;
-        int Ytop = 150;
-        int Ybottom = 300;
+        int Ytop = 110;
+        int Ybottom = 235;
         
         //top line
         for(int i = Xleft; i<=Xright; i+=5){
