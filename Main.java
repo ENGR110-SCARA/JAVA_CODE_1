@@ -158,7 +158,15 @@ public class Main{
     }
     
     public void transferFile(){
-    
+        //Require PSCP in root folder
+        //Can be downloaded at: http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
+        String fname = UIFileChooser.open();
+        try {
+            Process p = Runtime.getRuntime().exec("pscp -l pi -pw pi "+fname+" pi@10.140.194.193:/home/pi/Arm/");
+            UI.println("Sent");
+        }catch(Exception e){
+            UI.println(e);
+        }
     }
     
     public void save_xy(){
