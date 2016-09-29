@@ -37,7 +37,7 @@ public class ToolPath
      ArrayList<Double> theta2_vector;
      ArrayList<Integer> pen_vector;
      ArrayList<Integer> pwm1_vector;
-     ArrayList<Integer> pwm2_ve ctor;
+     ArrayList<Integer> pwm2_vector;
      ArrayList<Integer> pwm3_vector;
 
     /**
