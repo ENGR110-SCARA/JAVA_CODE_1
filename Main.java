@@ -93,7 +93,7 @@ public class Main{
         }
 
         // add point
-        if (   (state == 2) &&(action.equals("clicked"))){
+        if (   (state == 2) &&(action.equals("dragged"))){
             // add point(pen down) and draw
             UI.printf("Adding point x=%f y=%f\n",x,y);
             drawing.add_point_to_path(x,y,true); // add point with pen down
