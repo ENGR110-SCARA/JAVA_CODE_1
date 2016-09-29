@@ -37,7 +37,7 @@ public class ToolPath
      ArrayList<Double> theta2_vector;
      ArrayList<Integer> pen_vector;
      ArrayList<Integer> pwm1_vector;
-     ArrayList<Integer> pwm2_vector;
+     ArrayList<Integer> pwm2_ve ctor;
      ArrayList<Integer> pwm3_vector;
 
     /**
@@ -46,7 +46,7 @@ public class ToolPath
     public ToolPath()
     {
         // initialise instance variables
-      n_steps = 50;
+      n_steps = 2;
       //use 1 step for circle
       //n_steps = 1;
       theta1_vector = new ArrayList<Double>();
@@ -75,10 +75,10 @@ public class ToolPath
                 pwm1_vector.add(arm.get_pwm1());
                 theta2_vector.add(arm.get_theta2()*180/Math.PI);
                 pwm2_vector.add(arm.get_pwm2());
-                if (p0.get_pen()){ 
-                  pen_vector.add(2000);
+                if (p1.get_pen()){ 
+                  pen_vector.add(1100);
                 } else {
-                  pen_vector.add(1000);
+                  pen_vector.add(1900);
                 }
             }
         }
