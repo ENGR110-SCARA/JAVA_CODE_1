@@ -96,7 +96,7 @@ public class Arm{
         UI.drawString(out_str, xm1-2*mr,ym1-mr/2+3*mr);
         out_str=String.format("ym1=%d",ym1);
         UI.drawString(out_str, xm1-2*mr,ym1-mr/2+4*mr);
-        out_str=String.format("pwm1=%d",pwm1);
+        out_str=String.format("pwm1=%d",get_pwm1());
         UI.drawString(out_str, xm1-2*mr,ym1-mr/2+5*mr);
         // ditto for second motor                
         out_str = String.format("t2=%3.1f",theta2*180/Math.PI);
@@ -105,7 +105,7 @@ public class Arm{
         UI.drawString(out_str, xm2+2*mr,ym2-mr/2+3*mr);
         out_str=String.format("ym2=%d",ym2);
         UI.drawString(out_str, xm2+2*mr,ym2-mr/2+4*mr);
-        out_str=String.format("pwm2=%d",pwm2);
+        out_str=String.format("pwm2=%d",get_pwm2());
         UI.drawString(out_str, xm2+2*mr,ym2-mr/2+5*mr);
         // draw Field Of View
         UI.setColor(Color.GRAY);
